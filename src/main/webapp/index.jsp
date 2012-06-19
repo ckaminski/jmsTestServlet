@@ -6,7 +6,7 @@
 <script type="text/javascript"> 
 	$(document).ready(function() {
 	   $.get('./jmsops/?action=jmsdata', function(data) { 
-		  alert("data received: " + data); 
+		  alert("returned jmsdata equals: [" + data + "]");
 	   });
 	 });
 </script>
@@ -19,6 +19,7 @@ Source: <select name="Source"> <option value="" /> </select>  Custom: <input typ
 ReplyTo:  <select name="ReplyTo"> <option value=""/> </select>  Custom: <input type="text" name="ReplyToCustom"/> <br/>
 <input type="radio" name="ConnectionType" value="Queue">Queue</input> 
 <input type="radio" name="ConnectionType" value="Topic">Topic</input> 
+<input type="submit" name="submitbutton" value="Start Listening"/>
 <br/> 
  
 </body>
