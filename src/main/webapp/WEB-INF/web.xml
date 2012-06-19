@@ -12,6 +12,6 @@
   
   <servlet-mapping>
   	<servlet-name>JMS Test Applet</servlet-name>
-  	<url-pattern>/jmsops</url-pattern>
+  	<url-pattern>/jmsops/*</url-pattern>
   </servlet-mapping>
 </web-app>
