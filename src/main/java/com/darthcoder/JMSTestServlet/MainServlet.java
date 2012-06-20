@@ -11,6 +11,8 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class MainServlet extends HttpServlet {
+	boolean stopFlag = false;
+	
 	private String getJMSNames() { 
 		StringBuilder retVal = new StringBuilder();
 		try {
@@ -38,10 +40,15 @@ public class MainServlet extends HttpServlet {
 
 	// TODO: Add authentication capabilities.
 	void runMessageListener(HttpServletRequest request, HttpServletResponse response) { 
+		System.out.println("Starting runMessageListener");  
+		
 		String connFactoryName = request.getParameter("ConnFactoryName"); 
 		String replyToName     = request.getParameter("ReplyToName");
 		String replyToType     = request.getParameter("ReplyToType");
 		InitialContext ctx = null;
+		
+		assert(connFactoryName != null) : "ConnectionFactoryName is null"; 
+		assert(replyToName != null) : "ReplyTo destination is null!"; 
 		
 		try {
 			ctx = new InitialContext();
@@ -55,7 +62,7 @@ public class MainServlet extends HttpServlet {
 			MessageConsumer consumer  = msgSession.createConsumer(queue); 
 			
 			conn.start(); 
-			while ( 1 ) { 
+			while ( !stopFlag ) { 
 				// TODO: wait on exit flag 
 				// TODO: make this a user-specifiable parameter. 
 				Message msg = consumer.receive(1000); 
