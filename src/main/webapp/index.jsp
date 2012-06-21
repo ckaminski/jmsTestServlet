@@ -20,7 +20,7 @@
 	 });
 	
 function startListener() { 
-	var argumentStr = $('#CFactory').val() + '&' + $('#ReplyTo').val();
+	var argumentStr = 'ConnFactoryName=' + $('#CFactory').val() + '&ReplyToName=' + $('#ReplyTo').val();
 	var urlString = "./jmsops/?action=jmsmessages&" + argumentStr;
 	alert("Using URLString " + urlString);
 	$.ajax({ url: urlString, success: function(data){

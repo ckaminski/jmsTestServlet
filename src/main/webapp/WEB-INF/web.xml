@@ -3,15 +3,20 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>JMS Test Applet</display-name>
-  <servlet>
-  	<servlet-name>JMS Test Applet</servlet-name>
-  	<servlet-class>com.darthcoder.JMSTestServlet.MainServlet</servlet-class>
-  	<load-on-startup>1</load-on-startup> 
-  </servlet>
+	<display-name>JMS Test Applet</display-name>
   
-  <servlet-mapping>
-  	<servlet-name>JMS Test Applet</servlet-name>
-  	<url-pattern>/jmsops/*</url-pattern>
-  </servlet-mapping>
+	<listener>
+	<listener-class>com.darthcoder.JMSTestServlet.JMSSessionListener</listener-class>
+	</listener>
+ 
+	<servlet>
+		<servlet-name>JMS Test Applet</servlet-name>
+		<servlet-class>com.darthcoder.JMSTestServlet.MainServlet</servlet-class>
+		<load-on-startup>1</load-on-startup> 
+	</servlet>
+ 
+	<servlet-mapping>
+		<servlet-name>JMS Test Applet</servlet-name>
+		<url-pattern>/jmsops/*</url-pattern>
+	</servlet-mapping>
 </web-app>

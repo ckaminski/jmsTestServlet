@@ -1,10 +1,14 @@
 package com.darthcoder.JMSTestServlet;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.jms.*;
 import javax.naming.*;
+import javax.servlet.ServletContext;
 import javax.servlet.http.*; 
 
 //import com.sun.xml.rpc.processor.modeler.j2ee.xml.javaXmlTypeMappingType;
@@ -13,6 +17,11 @@ import javax.servlet.http.*;
 public class MainServlet extends HttpServlet {
 	boolean stopFlag = false;
 	
+	@Override
+	public void init() { 
+
+	}
+
 	private String getJMSNames() { 
 		StringBuilder retVal = new StringBuilder();
 		try {
@@ -38,6 +47,41 @@ public class MainServlet extends HttpServlet {
 		return retVal.toString();
 	} 
 
+	void addPrimerMessage() { 
+		// Adds a primer message to the ReplyTo queue. 
+		System.out.println("Adding primer message to the message queue - to test R&D");
+		QueueConnection queueConnection = null;
+	     try {
+	 		
+			 InitialContext ctx = new InitialContext();
+			 QueueConnectionFactory queueConnectionFactory = (QueueConnectionFactory)ctx.lookup("jms/QueueFactory1"); 
+			 Queue   queue = (Queue)ctx.lookup("jms/ReplyTo"); 
+			 
+	         queueConnection = queueConnectionFactory.createQueueConnection();
+	         queueConnection.start();
+	         QueueSession queueSession = queueConnection.createQueueSession(false,
+	                 Session.AUTO_ACKNOWLEDGE);
+	         QueueSender sender = queueSession.createSender(queue); 
+	 
+	         TextMessage msg = queueSession.createTextMessage();
+	         msg.setText("A message from MessageServlet");
+	         msg.setStringProperty("name", "MessageServlet");
+	 
+	         sender.send(msg);
+	     } catch (JMSException e) {
+	         throw new RuntimeException(e);
+	     } catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	         try {
+	             if (queueConnection != null) {
+	                 queueConnection.close();
+	             }
+	         } catch (JMSException e) { //ignore
+	         }
+	     }
+	}
 	// TODO: Add authentication capabilities.
 	void runMessageListener(HttpServletRequest request, HttpServletResponse response) { 
 		System.out.println("Starting runMessageListener");  
@@ -65,7 +109,9 @@ public class MainServlet extends HttpServlet {
 			while ( !stopFlag ) { 
 				// TODO: wait on exit flag 
 				// TODO: make this a user-specifiable parameter. 
-				Message msg = consumer.receive(1000); 
+				TextMessage msg = (TextMessage) consumer.receive(1000);
+				if ( msg != null ) 
+					System.out.println("Message: " + msg.toString());
 			}
 			conn.stop(); 
 			
@@ -94,8 +140,11 @@ public class MainServlet extends HttpServlet {
 			} 
 		} else if (action.equals("jmsmessages") ) { 
 			runMessageListener(request, response);
+		} else if (action.equals("primermessage")) { 
+			addPrimerMessage();
 		} else { 
 			
 		}
 	}
 }
+
