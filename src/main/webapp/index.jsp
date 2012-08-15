@@ -4,20 +4,21 @@
  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" ></script> 
  
 <script type="text/javascript"> 
-	$(document).ready(function() {
-	   $.get('./jmsops/?action=jmsdata', function(data) { 
-		  //alert("JMSDATA: " + data);
-		  var strs = data.split(";"); 
-		  for ( idx in strs ) {
-			  var value =  strs[idx];
-			  //alert("Using value: " + value);
-			  $('#CFactory').append($('<option>', { value : value }).text(value)); 
-			  $('#Source').append($('<option>', { value : value }).text(value)); 
-			  $('#ReplyTo').append($('<option>', { value : value }).text(value)); 
-		  }
-		  
-	   });
-	 });
+
+$(document).ready(function() {
+   $.get('./jmsops/?action=jmsdata', function(data) { 
+	  //alert("JMSDATA: " + data);
+	  var strs = data.split(";"); 
+	  for ( idx in strs ) {
+		  var value =  strs[idx];
+		  //alert("Using value: " + value);
+		  $('#CFactory').append($('<option>', { value : value }).text(value)); 
+		  $('#Source').append($('<option>', { value : value }).text(value)); 
+		  $('#ReplyTo').append($('<option>', { value : value }).text(value)); 
+	  }
+	  
+   });
+ });
 	
 function startListener() { 
 	var argumentStr = 'ConnFactoryName=' + $('#CFactory').val() + '&ReplyToName=' + $('#ReplyTo').val();
@@ -25,11 +26,11 @@ function startListener() {
 	alert("Using URLString " + urlString);
 	$.ajax({ url: urlString, success: function(data){
 		alert("we have data" + data);
-        //Update your dashboard gauge
-        //salesGauge.setValue(data.value);
+
 
     }, dataType: "json", complete: startListener, timeout: 30000 });
 }
+
 </script>
 
 

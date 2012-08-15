@@ -18,15 +18,19 @@
     	<groupId>javax.servlet</groupId>
     	<artifactId>javax.servlet-api</artifactId>
     	<version>3.0.1</version>
-    	<type>jar</type>
-    	<scope>compile</scope>
+    	<scope>provided</scope>
     </dependency>
     <dependency>
     	<groupId>javax.servlet.jsp</groupId>
     	<artifactId>jsp-api</artifactId>
     	<version>2.2.1-b03</version>
-    	<type>jar</type>
-    	<scope>compile</scope>
+    	<scope>provided</scope>
+    </dependency>
+    <dependency>
+    	<groupId>javax.jms</groupId>
+    	<artifactId>jms</artifactId>
+    	<version>1.1</version>
+    	<scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
