@@ -67,15 +67,15 @@ public class MainServlet extends HttpServlet {
 	         msg.setText("A message from MessageServlet");
 	         msg.setStringProperty("name", "MessageServlet");
 	 
-	         sender.send(msg);
-	     } catch (JMSException e) {
+	         sender.send(msg); 
+	     } catch (JMSException e) { 
 	         throw new RuntimeException(e);
 	     } catch (NamingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-	         try {
-	             if (queueConnection != null) {
+			e.printStackTrace(); 
+		} finally { 
+	         try { 
+	             if (queueConnection != null) {  
 	                 queueConnection.close();
 	             }
 	         } catch (JMSException e) { //ignore
@@ -118,7 +118,7 @@ public class MainServlet extends HttpServlet {
 			msgSession.close();
 			conn.close();
 			ctx.close();
-		} catch (NamingException e) {
+		} catch (NamingException e) { 
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -136,7 +136,7 @@ public class MainServlet extends HttpServlet {
 			try {
 				response.getWriter().write(jmsdata);
 			} catch (IOException e) {
-				e.printStackTrace();
+				e.printStackTrace(); 
 			} 
 		} else if (action.equals("jmsmessages") ) { 
 			runMessageListener(request, response);
