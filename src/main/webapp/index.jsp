@@ -30,7 +30,7 @@ function startListener() {
 	alert("Using URLString " + urlString);
 	$.ajax({ url: urlString, success: function(data){
 		alert("we have data" + data);
-
+		addMessageToSidebar(data);
 
     }, dataType: "json", complete: startListener, timeout: 30000 });
 }
@@ -42,6 +42,14 @@ function newMessage() {
 	window.alert("hello world alert");
 	popup("hello world!");
 }
+
+function addMessageToSidebar( data ) { 
+	var sidebar = $("#leftbar"); 
+	sideBar.innerHTML += "hello world."; 
+	
+}
+
+
 </script> 
 
 

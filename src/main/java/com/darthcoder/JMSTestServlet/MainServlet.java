@@ -116,7 +116,7 @@ public class MainServlet extends HttpServlet {
 			conn.stop(); 
 			
 			msgSession.close();
-			conn.close();
+			conn.close(); 
 			ctx.close();
 		} catch (NamingException e) { 
 			e.printStackTrace();
